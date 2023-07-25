@@ -8,8 +8,10 @@ const ContactForm = ({ addContact }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addContact({state});
-    setState({name: '', number: ''});
+    addContact(state);
+    
+    setName('');
+    setNumber('');
     
   };
 
@@ -24,7 +26,7 @@ const ContactForm = ({ addContact }) => {
       <input
         type="text"
         name="name"
-        value={name}
+        value={state.name}
         onChange={handleChange}
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name"
@@ -34,7 +36,7 @@ const ContactForm = ({ addContact }) => {
       <input
         type="tel"
         name="number"
-        value={number}
+        value={state.number}
         onChange={handleChange}
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
