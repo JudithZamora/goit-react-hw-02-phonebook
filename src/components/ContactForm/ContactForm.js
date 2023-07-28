@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const ContactForm = ({ addContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
   const [state, setState] = useState({name: '', number: ''});
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    const storedContacts = localStorage.getItem('contacts');
+    if (storedContacts) {
+      setContacts(JSON.parse(storedContacts));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     addContact(state);
     
-    setName('');
-    setNumber('');
-    
+    setState({ name: '', number: '' });
   };
 
   const handleChange = e => {
   setState ((prevState) => ({...prevState, [e.target.name]: e.target.value}));
   };
-  console.log(state);
 
   return (
     <form onSubmit={handleSubmit}>
